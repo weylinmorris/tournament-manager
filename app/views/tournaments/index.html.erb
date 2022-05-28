@@ -1,0 +1,34 @@
+<h1>Tournaments</h1>
+
+<form method="get" action="/">
+  <label>
+    Start Date
+    <input
+      id="start_date"
+      name="start_date"
+      type="date"
+      />
+  </label>
+
+  <label>
+    End Date
+    <input
+      id="end_date"
+      name="end_date"
+      type="date"
+      />
+  </label>
+
+  <button>Search by Date</button>
+</form>
+
+<ul>
+  <% @tournaments.each do |tournament| %>
+    <li>
+      <%= link_to tournament.tournament_name, tournament %>
+      <span><%= tournament.date %></span>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "New Tournament", new_tournament_path %>

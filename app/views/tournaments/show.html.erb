@@ -1,0 +1,29 @@
+<h1><%= @tournament.tournament_name %></h1>
+<p><%= @tournament.id %></p>
+<ul>
+  <li><%= link_to "Edit", edit_tournament_path(@tournament) %></li>
+  <li><%= link_to "Destroy", tournament_path(@tournament), data: {
+    turbo_method: :delete,
+    turbo_confirm: "Are you sure?"
+  } %></li>
+</ul>
+
+<h3>Assigned Caddies</h3>
+<div>
+  <% @tournament_caddies.each do |caddie| %>
+    <p><%= caddie.caddie_name %></p>
+    <form method="post" action="/tournament/remove-caddie/<%= @tournament.id %>/<%= caddie.id %>">
+      <button>Remove</button>
+    </form>
+  <% end %>
+</div>
+
+<h3>Not Assigned Caddies</h3>
+<div>
+  <% @other_caddies.each do |caddie| %>
+    <p><%= caddie.caddie_name %></p>
+    <form method="post" action="/tournament/add-caddie/<%= @tournament.id %>/<%= caddie.id %>">
+      <button>Add</button>
+    </form>
+  <% end %>
+</div>

@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tournament_id: MyString
+  tournament_name: MyString
+  course_name: MyString
+  date: 2022-05-27
+  start_time: 2022-05-27 16:30:06
+  end_time: 2022-05-27 16:30:06
+
+two:
+  tournament_id: MyString
+  tournament_name: MyString
+  course_name: MyString
+  date: 2022-05-27
+  start_time: 2022-05-27 16:30:06
+  end_time: 2022-05-27 16:30:06
