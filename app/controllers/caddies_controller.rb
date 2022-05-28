@@ -1,46 +1,40 @@
 class CaddiesController < ApplicationController
+  protect_from_forgery with: :null_session
+
   def index
     @caddies = Caddie.all
+
+    render json: @caddies
   end
 
   def show
     @caddie = Caddie.find(params[:id])
     @tournaments = Caddie.find(params[:id]).tournaments
-  end
 
-  def new
-    @caddie = Caddie.new
+    render json: {
+      "caddie": @caddie,
+      "tournaments": @tournaments
+    }
   end
 
   def create
-    @caddie = Caddie.new(caddie_params)
+    @caddie = Caddie.create(caddie_params)
 
-    if @caddie.save
-      redirect_to @caddie
-    else
-      render :new, status: :unprocessable_entity
-    end
-  end
-
-  def edit
-    @caddie = Caddie.find(params[:id])
+    render json: @caddie
   end
 
   def update
     @caddie = Caddie.find(params[:id])
+    @caddie.update(caddie_params)
 
-    if @caddie.update(caddie_params)
-      redirect_to @caddie
-    else
-      render :edit, status: :unprocessable_entity
-    end
+    render json: "#{@caddie.caddie_name} has been updated!"
   end
 
   def destroy
     @caddie = Caddie.find(params[:id])
     @caddie.destroy
 
-    redirect_to root_path, status: :see_other
+    render json: "#{@caddie.caddie_name} has been destroyed!"
   end
 
   private

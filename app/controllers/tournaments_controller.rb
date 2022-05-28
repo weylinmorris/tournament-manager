@@ -1,4 +1,6 @@
 class TournamentsController < ApplicationController
+  protect_from_forgery with: :null_session
+
   def index
     @tournaments = Tournament.all
     @date = params[:date]
@@ -6,6 +8,8 @@ class TournamentsController < ApplicationController
     if @date != "" && @date != nil
       @tournaments = @tournaments.select { |tournament| tournament[:date] == Date.parse(@date) }
     end
+
+    render json: @tournaments
   end
 
   def show
@@ -14,34 +18,28 @@ class TournamentsController < ApplicationController
 
     # TODO: There must be an interface that'll make this cleaner, but I can't find it
     @other_caddies = Caddie.all.select{ |caddie| !@tournament_caddies.include? caddie }
-  end
 
-  def new
-    @tournament = Tournament.new
+    render json: {
+      "tournament"         => @tournament,
+      "tournament_caddies" => @tournament_caddies,
+      "other_caddies"      => @other_caddies
+    }
   end
 
   def create
-    @tournament = Tournament.new(tournament_params)
+    @tournament = Tournament.create(tournament_params)
 
-    if @tournament.save
-      redirect_to @tournament
-    else
-      render :new, status: :unprocessable_entity
-    end
-  end
-
-  def edit
-    @tournament = Tournament.find(params[:id])
+    render json: @tournament
   end
 
   def update
-    @tournament = Tournament.find(params[:id])
+    puts "Updating tournament"
+    puts params
 
-    if @tournament.update(tournament_params)
-      redirect_to @tournament
-    else
-      render :edit, status: :unprocessable_entity
-    end
+    @tournament = Tournament.find(params[:id])
+    @tournament.update(tournament_params)
+
+    render json: "#{@tournament.tournament_name} has been updated!"
   end
 
   def add_caddie
@@ -49,8 +47,6 @@ class TournamentsController < ApplicationController
     @caddie = Caddie.find(params[:caddie_id])
 
     @tournament.caddies << @caddie
-
-    redirect_to @tournament
   end
 
   def remove_caddie
@@ -58,15 +54,13 @@ class TournamentsController < ApplicationController
     @caddie = Caddie.find(params[:caddie_id])
 
     @tournament.caddies.delete(@caddie)
-
-    redirect_to @tournament
   end
 
   def destroy
     @tournament = Tournament.find(params[:id])
     @tournament.destroy
 
-    redirect_to root_path, status: :see_other
+    render json: "#{@tournament.tournament_name} has been destroyed!"
   end
 
   private
