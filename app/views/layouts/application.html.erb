@@ -8,13 +8,12 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
   <body>
-  <nav>
-    <a href="/tournaments">Tournaments</a>
-    <a href="/caddies">Caddies</a>
-  </nav>
-    <%= yield %>
+
+  <div id="root"></div>
+
   </body>
 </html>

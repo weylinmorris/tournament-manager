@@ -1,3 +1,13 @@
-// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
-import "@hotwired/turbo-rails"
-import "controllers"
+import React from "react"
+import * as ReactDOM from "react-dom";
+import Navbar from "./src/components/ui/Navbar";
+
+const RoutedApp = () => {
+    return (
+        <div>
+            <Navbar />
+        </div>
+    )
+}
+
+ReactDOM.render(<RoutedApp />, document.getElementById("root"))
