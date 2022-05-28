@@ -1,17 +1,10 @@
 class TournamentsController < ApplicationController
   def index
     @tournaments = Tournament.all
+    @date = params[:date]
 
-    @start_date = params[:start_date]
-    @end_date = params[:end_date]
-
-    if @start_date != "" && @start_date != nil
-      puts "", @start_date, ""
-      @tournaments = @tournaments.select { |tournament| tournament[:date] >= Date.parse(@start_date) }
-    end
-    if @end_date != "" && @end_date != nil
-      puts "", @end_date, ""
-      @tournaments = @tournaments.select { |tournament| tournament[:date] <= Date.parse(@end_date) }
+    if @date != "" && @date != nil
+      @tournaments = @tournaments.select { |tournament| tournament[:date] == Date.parse(@date) }
     end
   end
 
