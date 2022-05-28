@@ -1,24 +1,33 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Setup
 
-Things you may want to cover:
+#### Install Gems
+```
+$ bundle install
+```
 
-* Ruby version
+#### Install React Dependencies
+```
+$ npm install
+```
 
-* System dependencies
+#### DB Migrations
+```
+$ rake db:reset db:migrate
+```
 
-* Configuration
+#### Webpack
+```
+$ yarn build --watch
+```
 
-* Database creation
+#### Tests
+```
+$ rspec
+```
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+#### Development Server
+```
+$ rails server -b 0.0.0.0 -p <port> -e development
+```

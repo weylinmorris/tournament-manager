@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root 'global#index'
+
   get '/api/v1/tournaments', to: 'tournaments#index'
   get '/api/v1/tournaments/:id', to: 'tournaments#show'
   post '/api/v1/tournaments', to: 'tournaments#create'
